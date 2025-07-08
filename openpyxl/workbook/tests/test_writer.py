@@ -45,7 +45,7 @@ class TestWorkbookWriter:
           <sheet name="Sheet1" sheetId="2" state="visible" r:id="rId2"/>
         </sheets>
           <definedNames/>
-          <calcPr calcId="124519" fullCalcOnLoad="1"/>
+          <calcPr calcId="191029" fullCalcOnLoad="1"/>
         </workbook>
         """
         diff = compare_xml(xml, expected)
@@ -81,7 +81,7 @@ class TestWorkbookWriter:
           <sheet name="Sheet" sheetId="1" state="visible" r:id="rId1"/>
         </sheets>
         <definedNames/>
-        <calcPr calcId="124519" fullCalcOnLoad="1"/>
+        <calcPr calcId="191029" fullCalcOnLoad="1"/>
         </workbook>
         """
         diff = compare_xml(xml, expected)
@@ -110,7 +110,7 @@ class TestWorkbookWriter:
         <definedNames>
           <definedName localSheetId="0" name="_xlnm.Print_Area">'D&#xFC;sseldorf Sheet'!$A$1:$D$4</definedName>
         </definedNames>
-        <calcPr calcId="124519" fullCalcOnLoad="1"/>
+        <calcPr calcId="191029" fullCalcOnLoad="1"/>
         </workbook>
         """
         diff = compare_xml(xml, expected)
@@ -139,7 +139,7 @@ class TestWorkbookWriter:
         <definedNames>
           <definedName localSheetId="0" name="_xlnm.Print_Titles">'D&#xFC;sseldorf Sheet'!$1:$5</definedName>
         </definedNames>
-        <calcPr calcId="124519" fullCalcOnLoad="1"/>
+        <calcPr calcId="191029" fullCalcOnLoad="1"/>
         </workbook>
         """
         diff = compare_xml(xml, expected)
@@ -169,7 +169,7 @@ class TestWorkbookWriter:
         <definedNames>
         <definedName localSheetId="0" hidden="1" name="_xlnm._FilterDatabase">'D&#xFC;sseldorf Sheet'!$A$1:$A$10</definedName>
         </definedNames>
-        <calcPr calcId="124519" fullCalcOnLoad="1"/>
+        <calcPr calcId="191029" fullCalcOnLoad="1"/>
         </workbook>
         """
         diff = compare_xml(xml, expected)
@@ -197,7 +197,7 @@ class TestWorkbookWriter:
         <definedNames>
         <definedName name="MyConstant">3.14</definedName>
         </definedNames>
-        <calcPr calcId="124519" fullCalcOnLoad="1"/>
+        <calcPr calcId="191029" fullCalcOnLoad="1"/>
         </workbook>
         """
         diff = compare_xml(xml, expected)
@@ -227,7 +227,7 @@ class TestWorkbookWriter:
         <definedNames>
         <definedName localSheetId="0" name="MyReference">'D&#xFC;sseldorf Sheet'!$A$1:$A$10</definedName>
         </definedNames>
-        <calcPr calcId="124519" fullCalcOnLoad="1"/>
+        <calcPr calcId="191029" fullCalcOnLoad="1"/>
         </workbook>
         """
         diff = compare_xml(xml, expected)

@@ -29,6 +29,13 @@ True
 
 If you're trying to use a formula that isn't known this could be because you're using a formula that was not included in the initial specification. Such formulae must be prefixed with `_xlfn.` to work.
 
+When using Excel's dynamic array functions you may need to ensure that the
+workbook uses a recent ``calcId`` so that the formulas are recalculated:
+
+.. :: doctest
+
+    >>> wb.calculation.calcId = 191029
+
 
 Special formulae
 ++++++++++++++++

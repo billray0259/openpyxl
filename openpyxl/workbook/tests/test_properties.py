@@ -43,7 +43,7 @@ class TestCalcProperties:
         calc = CalcProperties()
         xml = tostring(calc.to_tree())
         expected = """
-           <calcPr calcId="124519" fullCalcOnLoad="1" />
+           <calcPr calcId="191029" fullCalcOnLoad="1" />
         """
         diff = compare_xml(xml, expected)
         assert diff is None, diff
