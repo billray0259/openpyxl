@@ -122,6 +122,7 @@ class Worksheet(_WorkbookChild):
         self.merged_cells = MultiCellRange()
         self._tables = TableList()
         self._pivots = []
+        self._arrays = []
         self.data_validations = DataValidationList()
         self._hyperlinks = []
         self.sheet_state = 'visible'
@@ -567,6 +568,11 @@ class Worksheet(_WorkbookChild):
         if anchor is not None:
             img.anchor = anchor
         self._images.append(img)
+
+    def add_dynamic_array(self, formula, anchor):
+        """Add a dynamic array formula to the worksheet."""
+        from .arrays import add_dynamic_array
+        return add_dynamic_array(self, formula, anchor)
 
 
     def add_table(self, table):

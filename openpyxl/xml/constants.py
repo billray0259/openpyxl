@@ -74,6 +74,7 @@ SHEET_DRAWING_NS = "http://schemas.openxmlformats.org/drawingml/2006/spreadsheet
 CHART_DRAWING_NS = "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing"
 
 CUSTOMUI_NS = 'http://schemas.microsoft.com/office/2006/relationships/ui/extensibility'
+XDA_NS = 'http://schemas.microsoft.com/office/spreadsheetml/2017/dynamicarray'
 
 
 NAMESPACES = {
@@ -86,6 +87,7 @@ NAMESPACES = {
     'xml': XML_NS,
     'main': SHEET_MAIN_NS,
     'cust': CUSTPROPS_NS,
+    'xda': XDA_NS,
 }
 
 ## Mime types

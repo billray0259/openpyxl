@@ -120,6 +120,7 @@ class WorkSheetParser:
         self.row_breaks = RowBreak()
         self.col_breaks = ColBreak()
         self.rich_text = rich_text
+        self.cell_cm = {}
 
 
     def parse(self):
@@ -192,6 +193,7 @@ class WorkSheetParser:
         style_id = element.get('s', 0)
         if style_id:
             style_id = int(style_id)
+        cm = element.get('cm')
 
         if data_type == "inlineStr":
             value = None
@@ -204,6 +206,9 @@ class WorkSheetParser:
         else:
             self.col_counter += 1
             row, column = self.row_counter, self.col_counter
+
+        if cm:
+            self.cell_cm[(row, column)] = int(cm)
 
         if not self.data_only and element.find(FORMULA_TAG) is not None:
             data_type = 'f'
@@ -371,7 +376,25 @@ class WorksheetReader:
                 c = Cell(self.ws, row=cell['row'], column=cell['column'], style_array=style)
                 c._value = cell['value']
                 c.data_type = cell['data_type']
+                c.cm = self.parser.cell_cm.get((cell['row'], cell['column']))
                 self.ws._cells[(cell['row'], cell['column'])] = c
+
+                if c.cm:
+                    from .arrays import DynamicArrayAnchor
+                    formula = None
+                    if isinstance(c._value, ArrayFormula):
+                        formula = c._value.text[1:]
+                    elif isinstance(c._value, str) and c._value.startswith('='):
+                        formula = c._value[1:]
+                    if formula and formula.startswith("_xlfn._xlws."):
+                        formula = formula.replace("_xlfn._xlws.", "", 1)
+                    da = DynamicArrayAnchor(formula=formula, anchor=c.coordinate, cm=c.cm)
+                    if not hasattr(self.ws, '_arrays'):
+                        self.ws._arrays = []
+                    if not hasattr(self.ws.parent, '_arrays'):
+                        self.ws.parent._arrays = []
+                    self.ws._arrays.append(da)
+                    self.ws.parent._arrays.append(da)
 
         if self.ws._cells:
             self.ws._current_row = self.ws.max_row # use cells not row dimensions

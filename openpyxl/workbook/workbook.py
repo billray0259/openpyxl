@@ -62,6 +62,8 @@ class Workbook:
                  ):
         self._sheets = []
         self._pivots = []
+        self._arrays = []
+        self._metadata = None
         self._active_sheet_index = 0
         self.defined_names = DefinedNameDict()
         self._external_links = []

@@ -89,6 +89,12 @@ class ExcelWriter:
         archive.writestr(ARC_WORKBOOK, writer.write())
         archive.writestr(ARC_WORKBOOK_RELS, writer.write_rels())
 
+        if self.workbook._arrays:
+            from openpyxl.packaging.metadata import MetadataPart
+            mp = MetadataPart()
+            archive.writestr(mp.path[1:], tostring(mp.to_tree(self.workbook._arrays)))
+            self.manifest.append(mp)
+
         self._merge_vba()
 
         self.manifest._write(archive, self.workbook)
