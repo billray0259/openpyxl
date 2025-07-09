@@ -19,10 +19,14 @@ if LXML is True:
     xmlfile,
     XMLParser,
     )
-    from lxml.etree import fromstring, tostring
+    from lxml.etree import fromstring as _lxml_fromstring, tostring
     # do not resolve entities
     safe_parser = XMLParser(resolve_entities=False)
-    fromstring = partial(fromstring, parser=safe_parser)
+
+    def fromstring(text):
+        if isinstance(text, str):
+            text = text.encode()
+        return _lxml_fromstring(text, parser=safe_parser)
 
 else:
     from xml.etree.ElementTree import (
@@ -68,6 +72,7 @@ register_namespace('xdr', SHEET_DRAWING_NS)
 register_namespace('cdr', CHART_DRAWING_NS)
 register_namespace('xml', XML_NS)
 register_namespace('cust', CUSTPROPS_NS)
+register_namespace('xda', 'http://schemas.microsoft.com/office/spreadsheetml/2017/dynamicarray')
 
 
 tostring = partial(tostring, encoding="utf-8")

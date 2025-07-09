@@ -192,6 +192,9 @@ class WorkSheetParser:
         style_id = element.get('s', 0)
         if style_id:
             style_id = int(style_id)
+        cm = element.get('cm')
+        if cm is not None:
+            cm = int(cm)
 
         if data_type == "inlineStr":
             value = None
@@ -241,7 +244,10 @@ class WorkSheetParser:
                     else:
                         value = Text.from_tree(child).content
 
-        return {'row':row, 'column':column, 'value':value, 'data_type':data_type, 'style_id':style_id}
+        cell = {'row':row, 'column':column, 'value':value, 'data_type':data_type, 'style_id':style_id}
+        if cm is not None:
+            cell['cm'] = cm
+        return cell
 
 
     def parse_formula(self, element):
@@ -371,6 +377,16 @@ class WorksheetReader:
                 c = Cell(self.ws, row=cell['row'], column=cell['column'], style_array=style)
                 c._value = cell['value']
                 c.data_type = cell['data_type']
+                if 'cm' in cell:
+                    c.cm = cell['cm']
+                    from .arrays import DynamicArrayAnchor
+                    formula = None
+                    if c.data_type == 'f' and isinstance(c._value, str) and c._value.startswith('='):
+                        formula = c._value[1:]
+                    elif c.data_type == 's' and isinstance(c._value, str) and c._value.startswith('='):
+                        formula = c._value[1:]
+                    da = DynamicArrayAnchor(formula=formula, anchor=c.coordinate, cm=c.cm)
+                    self.ws._arrays.append(da)
                 self.ws._cells[(cell['row'], cell['column'])] = c
 
         if self.ws._cells:

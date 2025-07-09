@@ -39,6 +39,7 @@ class ReadOnlyWorksheet:
         self._current_row = None
         self._worksheet_path = worksheet_path
         self._shared_strings = shared_strings
+        self._arrays = []
         self._get_size()
         self.defined_names = DefinedNameDict()
 

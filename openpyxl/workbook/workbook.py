@@ -70,6 +70,7 @@ class Workbook:
         self.security = DocumentSecurity()
         self.__write_only = write_only
         self.shared_strings = IndexedList()
+        self._metadata = None
 
         self._setup_styles()
 

@@ -264,7 +264,8 @@ def test_implementation_compatbility(ReadOnlyWorksheet, DummyWorkbook):
     ro_only = set(['_worksheet_path',
                    'parent',
                    'title',
-                   '_shared_strings']
+                   '_shared_strings',
+                   '_arrays']
                   )
     assert std_attrs > std_only
     assert ro_attrs > ro_only
