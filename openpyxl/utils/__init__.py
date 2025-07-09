@@ -15,3 +15,4 @@ from .cell import (
 )
 
 from .formulas import FORMULAE
+from ..worksheet.arrays import add_dynamic_array

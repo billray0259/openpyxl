@@ -41,6 +41,7 @@ class ReadOnlyWorksheet:
         self._shared_strings = shared_strings
         self._get_size()
         self.defined_names = DefinedNameDict()
+        self._arrays = []
 
 
     def _get_size(self):

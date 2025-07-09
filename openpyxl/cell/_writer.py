@@ -18,7 +18,10 @@ def _set_attributes(cell, styled=None):
     if styled:
         attrs['s'] = f"{cell.style_id}"
 
-    if cell.data_type == "s":
+    if getattr(cell, "cm", None) is not None:
+        attrs['cm'] = f"{cell.cm}"
+        attrs['t'] = 'str'
+    elif cell.data_type == "s":
         attrs['t'] = "inlineStr"
     elif cell.data_type != 'f':
         attrs['t'] = cell.data_type
