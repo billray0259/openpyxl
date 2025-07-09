@@ -103,6 +103,7 @@ class Cell(StyleableObject):
         'parent',
         '_hyperlink',
         '_comment',
+        'cm',
                  )
 
     def __init__(self, worksheet, row=None, column=None, value=None, style_array=None):
@@ -118,6 +119,7 @@ class Cell(StyleableObject):
         if value is not None:
             self.value = value
         self._comment = None
+        self.cm = None
 
 
     @property

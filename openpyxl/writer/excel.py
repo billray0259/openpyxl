@@ -79,6 +79,8 @@ class ExcelWriter:
         self._write_images()
         self._write_charts()
 
+        self._write_metadata()
+
         self._write_external_links()
 
         stylesheet = write_stylesheet(self.workbook)
@@ -123,6 +125,20 @@ class ExcelWriter:
         for chart in self._charts:
             self._archive.writestr(chart.path[1:], tostring(chart._write()))
             self.manifest.append(chart)
+
+    def _write_metadata(self):
+        from openpyxl.packaging.metadata import MetadataPart
+        arrays = []
+        for ws in self.workbook.worksheets:
+            for da in getattr(ws, '_arrays', []):
+                arrays.append(da)
+        if not arrays:
+            return
+        cell_indices = list(range(1, len(arrays) + 1))
+        metadata = MetadataPart(cell_indices=cell_indices)
+        xml = tostring(metadata.to_tree())
+        self._archive.writestr(metadata.path[1:], xml)
+        self.manifest.append(metadata)
 
 
     def _write_drawing(self, drawing):

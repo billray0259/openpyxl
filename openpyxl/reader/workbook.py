@@ -69,6 +69,14 @@ class WorkbookParser:
 
         self.wb.security = package.workbookProtection
 
+        for rel in self.rels.values():
+            if rel.Type == 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata':
+                from openpyxl.packaging.metadata import MetadataPart
+                src = self.archive.read(rel.Target)
+                node = fromstring(src)
+                self.wb._metadata = MetadataPart.from_tree(node)
+                break
+
 
     def find_sheets(self):
         """

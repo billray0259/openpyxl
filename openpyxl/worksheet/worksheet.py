@@ -121,6 +121,7 @@ class Worksheet(_WorkbookChild):
         self._comments = []
         self.merged_cells = MultiCellRange()
         self._tables = TableList()
+        self._arrays = []
         self._pivots = []
         self.data_validations = DataValidationList()
         self._hyperlinks = []
@@ -567,6 +568,17 @@ class Worksheet(_WorkbookChild):
         if anchor is not None:
             img.anchor = anchor
         self._images.append(img)
+
+    def add_dynamic_array(self, formula, anchor):
+        """Write a dynamic array formula that spills when opened in Excel."""
+        from .arrays import DynamicArrayAnchor
+        da = DynamicArrayAnchor(formula=formula, anchor=anchor, cm=len(self._arrays) + 1)
+        self._arrays.append(da)
+        cell = self[anchor]
+        cell.value = f"=_xlfn._xlws.{formula}"
+        cell.data_type = 's'
+        cell.cm = da.cm
+        return da
 
 
     def add_table(self, table):
