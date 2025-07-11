@@ -98,7 +98,7 @@ class CalcProperties(Serialisable):
     forceFullCalc = Bool(allow_none=True)
 
     def __init__(self,
-                 calcId=124519,
+                 calcId=191029,
                  calcMode=None,
                  fullCalcOnLoad=True,
                  refMode=None,
